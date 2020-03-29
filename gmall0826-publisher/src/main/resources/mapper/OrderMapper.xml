@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace告诉java文件，这个mapper实现哪个接口-->
+<mapper namespace="com.zhang.gmall0826.gmall0826publisher.mapper.orderMapper" >
+
+    <select id="selectOrderAmount" resultType="java.lang.Double">
+          select sum(total_amount) order_amount  from gmall0826_order_info where create_date=#{date}
+    </select>
+    <select id="selectOrderHourAmount" resultMap="orderAmountMap">
+     select CREATE_HOUR  ,  sum(total_amount) ORDER_AMOUNT from gmall0826_order_info where create_date=#{date}
+                group by create_hour
+    </select>
+<!--对map类型的sql进行说明，自动设置字段和字段值-->
+    <resultMap id="orderAmountMap" type="java.util.Map" autoMapping="true"></resultMap>
+</mapper>

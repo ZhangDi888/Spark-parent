@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace告诉java文件，这个mapper实现哪个接口-->
+<mapper namespace="com.zhang.gmall0826.gmall0826publisher.mapper.DauMapper">
+    <select id="selectDauTotal" resultType="java.lang.Long">
+    SELECT count(*) FROM GMALL0826_DAU WHERE logDate = #{date}
+    </select>
+    <select id="selectDauHourCount" resultMap="dauResultMap">
+    SELECT LOGHOUR,count(*) ct FROM GMALL0826_DAU WHERE LOGDATE = #{date}
+    GROUP BY LOGHOUR
+    </select>
+    <!--要做一个resultMap说明怎么映射-->
+    <!--property是Map的key，column是表中的字段名，获得的是字段的值-->
+    <resultMap id="dauResultMap" type="java.util.Map">
+        <result property="logHour" column="LOGHOUR"></result>
+        <result property="ct" column="CT"></result>
+    </resultMap>
+</mapper>
